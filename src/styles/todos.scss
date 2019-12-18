@@ -1,0 +1,38 @@
+.bx--data-table-header__title {
+  margin-bottom: 8px;
+}
+
+// .bx--table-column-checkbox {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// }
+
+.table--wrapper {
+  overflow-x: auto;
+}
+
+.bx--data-table-container {
+  min-width: 31.25rem;
+}
+
+.bx--data-table td.bx--table-column-checkbox,
+.bx--table-column-checkbox,
+.bx--data-table tbody th,
+.bx--data-table .bx--table-header-label {
+  padding-top: 0.6875rem !important;
+  padding-bottom: 0.6875rem !important;
+}
+
+.bx--data-table--sort th {
+  height: 52px;
+}
+
+.bx--checkbox-wrapper {
+  margin: 0 !important;
+}
+
+.bx--data-table th,
+.bx--data-table td {
+  vertical-align: middle;
+}

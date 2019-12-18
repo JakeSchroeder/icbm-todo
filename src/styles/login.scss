@@ -1,0 +1,31 @@
+// @import "~carbon-components/scss/globals/scss/colors";
+@import "~carbon-components/scss/globals/scss/theme-tokens";
+.loginForm {
+  max-width: 500px;
+  background-color: $ibm-color__gray-10;
+  padding: 64px;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    padding: 16px;
+  }
+}
+
+.formGrouping {
+  margin-bottom: 24px;
+}
+
+.input-wrapper {
+  margin-bottom: 32px;
+}
+
+// .--username {
+//   margin-bottom: 16px;
+// }
+
+.registerLink {
+  display: block;
+  margin-bottom: 16px;
+  text-decoration: none;
+}
