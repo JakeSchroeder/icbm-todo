@@ -9,6 +9,7 @@ import {
 
 import { Link } from "react-router-dom";
 
+import "../styles/form.scss";
 import "../styles/login.scss";
 
 export default () => (

@@ -125,8 +125,8 @@ $deprecations--message: "Deprecated code was found, this code will be removed be
 @import "~carbon-components/scss/components/search/search";
 // @import '~carbon-components/scss/components/select/select';
 @import "~carbon-components/scss/components/text-input/text-input";
-// @import '~carbon-components/scss/components/text-area/text-area';
-// @import '~carbon-components/scss/components/number-input/number-input';
+@import "~carbon-components/scss/components/text-area/text-area";
+@import "~carbon-components/scss/components/number-input/number-input";
 @import "~carbon-components/scss/components/form/form";
 // @import '~carbon-components/scss/components/link/link';
 // @import '~carbon-components/scss/components/list-box/list-box';
@@ -136,7 +136,7 @@ $deprecations--message: "Deprecated code was found, this code will be removed be
 // @import '~carbon-components/scss/components/code-snippet/code-snippet';
 @import "~carbon-components/scss/components/overflow-menu/overflow-menu";
 // @import '~carbon-components/scss/components/content-switcher/content-switcher';
-// @import '~carbon-components/scss/components/date-picker/date-picker';
+@import "~carbon-components/scss/components/date-picker/date-picker";
 @import "~carbon-components/scss/components/dropdown/dropdown";
 // @import '~carbon-components/scss/components/loading/loading';
 // @import '~carbon-components/scss/components/modal/modal';

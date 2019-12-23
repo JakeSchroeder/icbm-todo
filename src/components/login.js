@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 
 // import auth from "./auth";
 
+import "../styles/form.scss";
 import "../styles/login.scss";
 
 export default () => {
