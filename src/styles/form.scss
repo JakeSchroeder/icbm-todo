@@ -9,3 +9,21 @@
 .bx--number {
   width: 100%;
 }
+
+.bx--date-picker-input__wrapper {
+  width: 100%;
+}
+
+.bx--date-picker {
+  width: 100%;
+}
+
+.bx--date-picker.bx--date-picker--single .bx--date-picker-container {
+  width: 100%;
+  max-width: 100%;
+}
+
+.bx--date-picker.bx--date-picker--single .bx--date-picker__input {
+  max-width: 100%;
+  width: 100%;
+}

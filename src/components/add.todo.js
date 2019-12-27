@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/side.scss";
 import "../styles/form.scss";
+
 import {
   Close20 as Close,
   ArrowRight16 as Arrow,
@@ -20,14 +21,19 @@ import {
 
 import { Link } from "react-router-dom";
 
-const AddTodo = ({ show, data }) => {
+const AddTodo = ({ data, setAdding }) => {
   return (
     <>
       <div className="side--overlay"></div>
       <aside className="side">
         <div className="side--nav">
           <h4>Add Todo</h4>
-          <button aria-label="close" className="side--close" type="button">
+          <button
+            onClick={() => setAdding(false)}
+            aria-label="close"
+            className="side--close"
+            type="button"
+          >
             <Close />
           </button>
         </div>
@@ -72,7 +78,7 @@ const AddTodo = ({ show, data }) => {
                       invalid={false}
                       invalidText="A valid value is required"
                       labelText="Date Picker label"
-                      pattern="d{1,2}"
+                      pattern="d{1,2}/d{4}"
                       placeholder="mm/dd/yyyy"
                       type="text"
                     />
