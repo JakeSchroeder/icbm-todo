@@ -5,17 +5,16 @@ import AddTodo from "./add.todo";
 import TodoTable from "./todo.table";
 
 const Todos = () => {
-  const [data, setData] = useState({ todos: [] });
+  const [todos, setTodos] = useState([]);
   const [isAdding, setAdding] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = initialRows;
+      const result = initialRows; //hit endpoint
 
-      setData(result);
+      setTodos(result);
 
       console.log(result);
-      //await
     };
 
     fetchData();
@@ -30,7 +29,7 @@ const Todos = () => {
     <>
       {isAdding ? <AddTodo setAdding={setAdding} /> : null}
 
-      <TodoTable initialRows={data.todos} headers={headers} />
+      <TodoTable initialRows={todos} headers={headers} />
     </>
   );
 };
