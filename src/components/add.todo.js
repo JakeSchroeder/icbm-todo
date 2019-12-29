@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/side.scss";
 import "../styles/form.scss";
 
@@ -16,20 +16,26 @@ import {
   TextInput,
   NumberInput,
   DatePicker,
-  DatePickerInput
+  DatePickerInput,
+  TextArea
 } from "carbon-components-react";
 
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
-const AddTodo = ({ data, setAdding }) => {
+const AddTodo = ({ addTodo, isAdding, toggleAdding }) => {
+  let [name, setName] = useState("");
+  let [priority, setPriority] = useState(1);
+  let [dueDate, setDueDate] = useState("");
+  let [description, setDescription] = useState("");
+
   return (
     <>
-      <div className="side--overlay"></div>
-      <aside className="side">
+      <div onClick={toggleAdding} className={`side--overlay ${isAdding}`}></div>
+      <aside className={`side ${isAdding}`}>
         <div className="side--nav">
           <h4>Add Todo</h4>
           <button
-            onClick={() => setAdding(false)}
+            onClick={toggleAdding}
             aria-label="close"
             className="side--close"
             type="button"
@@ -46,19 +52,23 @@ const AddTodo = ({ data, setAdding }) => {
                     autoComplete="todo-name"
                     id="todoName"
                     // invalid
+                    placeholder="New todo"
                     invalidText="A todo name is required"
                     className="--todoName"
                     type="text"
-                    labelText="Todo Name"
+                    labelText="Name"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
                   />
                 </div>
                 <div className="input-wrapper">
                   <NumberInput
-                    value={1}
                     step={1}
                     label="Priority"
                     min={1}
                     id="priorityInput"
+                    value={priority}
+                    onChange={e => setPriority(e.target.value)}
                   />
                 </div>
                 <div className="input-wrapper">
@@ -73,24 +83,54 @@ const AddTodo = ({ data, setAdding }) => {
                     <DatePickerInput
                       className="some-class"
                       disabled={false}
-                      iconDescription="Icon description"
+                      iconDescription="Calendar icon"
                       id="date-picker-input-id"
                       invalid={false}
                       invalidText="A valid value is required"
-                      labelText="Date Picker label"
+                      labelText="Due Date"
                       pattern="d{1,2}/d{4}"
                       placeholder="mm/dd/yyyy"
                       type="text"
+                      value={dueDate}
+                      onChange={e => setDueDate(e.target.value)}
                     />
                   </DatePicker>
+                </div>
+                <div className="input-wrapper">
+                  <TextArea
+                    className="--textArea"
+                    cols={50}
+                    id="todo-description"
+                    invalid={false}
+                    invalidText="A valid todo description is required"
+                    labelText="Description"
+                    light={false}
+                    placeholder="Placeholder text."
+                    rows={6}
+                    value={description}
+                    onChange={e => setDescription(e.target.value)}
+                  />
                 </div>
               </div>
             </Form>
           </div>
         </div>
         <div className="side--footer">
-          <Button kind="secondary">Cancel</Button>
-          <Button renderIcon={Add}>Add Todo</Button>
+          <Button onClick={toggleAdding} kind="secondary">
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              addTodo(name, priority, dueDate, description);
+              setName("");
+              setPriority(1);
+              setDueDate("");
+              setDescription("");
+            }}
+            renderIcon={Add}
+          >
+            Add Todo
+          </Button>
         </div>
       </aside>
     </>

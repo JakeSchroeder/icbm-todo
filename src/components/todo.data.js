@@ -5,8 +5,7 @@ export const initialRows = [
     priority: "1",
     dueDate: "12/1/2020",
     completed: false,
-    description: "Load Balancer 3 Todo",
-    subDescription: "kevins written word"
+    description: "Make a peanut butter sandwich and eat it with friends."
   },
   {
     id: "b",
@@ -48,6 +47,10 @@ export const headers = [
     key: "completed",
     header: "Completed"
   }
+  // {
+  //   key: "space",
+  //   header: "dwada"
+  // }
   //   {
   //     key: "attached_groups",
   //     header: "Attached Groups"

@@ -21,7 +21,9 @@ import {
   TableToolbarAction,
   TableToolbarContent,
   TableToolbarSearch,
-  TableToolbarMenu
+  TableToolbarMenu,
+  OverflowMenu,
+  OverflowMenuItem
 } from "carbon-components-react";
 
 import {
@@ -33,8 +35,6 @@ import {
 
 import "../styles/todos.scss";
 
-import AddTodo from "./add.todo";
-
 const batchActionClick = selectedRows => () => console.log("clicked");
 
 const insertInRandomPosition = (array, element) => {
@@ -44,10 +44,9 @@ const insertInRandomPosition = (array, element) => {
 
 class TodoTable extends React.Component {
   state = {
-    rows: this.props.initialRows,
+    rows: this.props.rows,
     headers: this.props.headers,
-    id: 0,
-    isEditing: false
+    id: 0
   };
 
   handleOnHeaderAdd = () => {
@@ -96,86 +95,71 @@ class TodoTable extends React.Component {
     });
   };
 
-  handleAddTodo = () => {
-    this.setState({
-      isEditing: !this.state.isEditing
-    });
-
-    console.log("is Editing:" + this.state.isEditing);
-  };
-
   render() {
-    let addTodoPanel = null;
-
-    if (this.state.isEditing) {
-      addTodoPanel = <AddTodo />;
-    }
-
     return (
-      <>
-        {addTodoPanel}
-        <div className="table--wrapper">
-          <DataTable
-            useZebraStyles={false}
-            isSortable={true}
-            rows={this.state.rows}
-            headers={this.state.headers}
-            {...this.props}
-            render={({
-              rows,
-              headers,
-              getHeaderProps,
-              getSelectionProps,
-              getBatchActionProps,
-              getRowProps,
-              onInputChange,
-              selectedRows,
-              getTableProps,
-              getTableContainerProps
-            }) => (
-              <TableContainer
-                title="[User] Todos"
-                description={
-                  "Below are a list of your Todos. You can sort, filter, check off and add new one's."
-                }
-                {...getTableContainerProps()}
-              >
-                <TableToolbar>
-                  <TableBatchActions {...getBatchActionProps()}>
-                    <TableBatchAction
-                      renderIcon={Delete}
-                      iconDescription="Delete the selected rows"
-                      onClick={batchActionClick(selectedRows)}
-                    >
-                      Delete
-                    </TableBatchAction>
+      <div className="table--wrapper">
+        <DataTable
+          useZebraStyles={false}
+          isSortable={true}
+          rows={this.state.rows}
+          headers={this.state.headers}
+          {...this.props}
+          render={({
+            rows,
+            headers,
+            getHeaderProps,
+            getSelectionProps,
+            getBatchActionProps,
+            getRowProps,
+            onInputChange,
+            selectedRows,
+            getTableProps,
+            getTableContainerProps
+          }) => (
+            <TableContainer
+              title="[User] Todos"
+              description={
+                "Below are a list of your Todos. You can sort, filter, check off and add new one's."
+              }
+              {...getTableContainerProps()}
+            >
+              <TableToolbar>
+                <TableBatchActions {...getBatchActionProps()}>
+                  <TableBatchAction
+                    renderIcon={Delete}
+                    iconDescription="Delete the selected rows"
+                    onClick={batchActionClick(selectedRows)}
+                  >
+                    Delete
+                  </TableBatchAction>
 
-                    <TableBatchAction
-                      renderIcon={Download}
-                      iconDescription="Download the selected rows"
-                      onClick={batchActionClick(selectedRows)}
+                  <TableBatchAction
+                    renderIcon={Download}
+                    iconDescription="Download the selected rows"
+                    onClick={batchActionClick(selectedRows)}
+                  >
+                    Download
+                  </TableBatchAction>
+                </TableBatchActions>
+                <TableToolbarContent>
+                  <TableToolbarSearch onChange={onInputChange} />
+                  <TableToolbarMenu>
+                    <TableToolbarAction
+                      primaryFocus
+                      onClick={this.handleOnRowAdd}
                     >
-                      Download
-                    </TableBatchAction>
-                  </TableBatchActions>
-                  <TableToolbarContent>
-                    <TableToolbarSearch onChange={onInputChange} />
-                    <TableToolbarMenu>
-                      <TableToolbarAction
-                        primaryFocus
-                        onClick={this.handleOnRowAdd}
-                      >
-                        Add row
-                      </TableToolbarAction>
-                      <TableToolbarAction onClick={this.handleOnHeaderAdd}>
-                        Add header
-                      </TableToolbarAction>
-                    </TableToolbarMenu>
-                    <Button renderIcon={Add} onClick={this.handleAddTodo}>
-                      Add Todo
-                    </Button>
-                  </TableToolbarContent>
-                </TableToolbar>
+                      Add row
+                    </TableToolbarAction>
+                    <TableToolbarAction onClick={this.handleOnHeaderAdd}>
+                      Add header
+                    </TableToolbarAction>
+                  </TableToolbarMenu>
+                  <Button renderIcon={Add} onClick={this.props.toggleAdding}>
+                    Add Todo
+                  </Button>
+                </TableToolbarContent>
+              </TableToolbar>
+              <div className="table-wrapper">
                 <Table {...getTableProps()}>
                   <TableHead>
                     <TableRow>
@@ -188,6 +172,7 @@ class TodoTable extends React.Component {
                           {header.header}
                         </TableHeader>
                       ))}
+                      <TableHeader />
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -214,7 +199,17 @@ class TodoTable extends React.Component {
                               );
                             }
                           })}
+                          <TableCell>
+                            <OverflowMenu flipped>
+                              <OverflowMenuItem primaryFocus>
+                                Action 1
+                              </OverflowMenuItem>
+                              <OverflowMenuItem>Action 2</OverflowMenuItem>
+                              <OverflowMenuItem>Action 3</OverflowMenuItem>
+                            </OverflowMenu>
+                          </TableCell>
                         </TableExpandRow>
+
                         <TableExpandedRow colSpan={headers.length + 4}>
                           <h1>{row.id}</h1>
                           <p>Description here</p>
@@ -223,11 +218,11 @@ class TodoTable extends React.Component {
                     ))}
                   </TableBody>
                 </Table>
-              </TableContainer>
-            )}
-          />
-        </div>
-      </>
+              </div>
+            </TableContainer>
+          )}
+        />
+      </div>
     );
   }
 }

@@ -8,12 +8,21 @@
 //   justify-content: center;
 // }
 
-.table--wrapper {
-  overflow-x: auto;
-}
+// .table--wrapper {
+//   overflow-x: auto;
+// }
+
+// .bx--data-table-container {
+//   min-width: 31.25rem;
+// }
 
 .bx--data-table-container {
-  min-width: 31.25rem;
+  min-width: 100%;
+  overflow: none;
+}
+
+.bx--data-table {
+  min-width: 800px;
 }
 
 .bx--data-table td.bx--table-column-checkbox,
@@ -35,4 +44,8 @@
 .bx--data-table th,
 .bx--data-table td {
   vertical-align: middle;
+}
+
+.table-wrapper {
+  overflow-x: auto;
 }

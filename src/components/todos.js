@@ -6,7 +6,8 @@ import TodoTable from "./todo.table";
 
 const Todos = () => {
   const [todos, setTodos] = useState([]);
-  const [isAdding, setAdding] = useState(false);
+
+  let [isAdding, setIsAdding] = useState("hidden");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,16 +21,40 @@ const Todos = () => {
     fetchData();
   }, []);
 
-  const handleAddTodo = () => {
-    setAdding(true);
+  // const handleAddTodo = () => {
+  //   setIsAdding(true);
+  //   console.log("is adding? " + isAdding);
+  // };
 
-    console.log("is Editing:" + isAdding);
+  const toggleIsAdding = () => {
+    setIsAdding(isAdding === "hidden" ? "isAdding" : "hidden");
   };
+
+  const addTodo = (newName, newPriority, newDueDate, newDescription) => {
+    setTodos([
+      {
+        id: Math.random() * 1000,
+        name: newName,
+        priority: newPriority,
+        dueDate: newDueDate,
+        desciption: newDescription,
+        completed: true
+      },
+      ...todos
+    ]);
+  };
+
   return (
     <>
-      {isAdding ? <AddTodo setAdding={setAdding} /> : null}
+      {isAdding === "isAdding" ? (
+        <AddTodo
+          addTodo={addTodo}
+          isAdding={isAdding}
+          toggleAdding={toggleIsAdding}
+        />
+      ) : null}
 
-      <TodoTable initialRows={todos} headers={headers} />
+      <TodoTable toggleAdding={toggleIsAdding} rows={todos} headers={headers} />
     </>
   );
 };
