@@ -5,7 +5,6 @@ export const initialRows = [
     priority: "1",
     dueDate: "12/1/2020",
     completed: false,
-    description: "Make a peanut butter sandwich and eat it with friends."
   },
   {
     id: "b",

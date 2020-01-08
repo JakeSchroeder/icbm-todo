@@ -28,6 +28,20 @@ const AddTodo = ({ addTodo, isAdding, toggleAdding }) => {
   let [dueDate, setDueDate] = useState("");
   let [description, setDescription] = useState("");
 
+  const dateFormatter = date => {
+    return (
+      (date.getMonth().toString().length > 1
+        ? date.getMonth() + 1
+        : "0" + (date.getMonth() + 1)) +
+      "/" +
+      (date.getDate().toString().length > 1
+        ? date.getDate()
+        : "0" + date.getDate()) +
+      "/" +
+      date.getFullYear()
+    );
+  };
+
   return (
     <>
       <div onClick={toggleAdding} className={`side--overlay ${isAdding}`}></div>
@@ -68,7 +82,7 @@ const AddTodo = ({ addTodo, isAdding, toggleAdding }) => {
                     min={1}
                     id="priorityInput"
                     value={priority}
-                    onChange={e => setPriority(e.target.value)}
+                    onChange={e => setPriority(e.target.valueAsNumber)}
                   />
                 </div>
                 <div className="input-wrapper">
@@ -76,23 +90,23 @@ const AddTodo = ({ addTodo, isAdding, toggleAdding }) => {
                     dateFormat="m/d/Y"
                     datePickerType="single"
                     id="date-picker"
-                    light={false}
                     locale="en"
-                    short={false}
+                    short={true}
+                    value={dueDate} //this is my state variable
+                    onChange={e => {
+                      setDueDate(dateFormatter(e[0]));
+                    }}
                   >
                     <DatePickerInput
                       className="some-class"
-                      disabled={false}
-                      iconDescription="Calendar icon"
-                      id="date-picker-input-id"
+                      iconDescription="Date Calendar icon"
+                      id="date-picker-input"
                       invalid={false}
-                      invalidText="A valid value is required"
+                      invalidText="A valid due date is required"
                       labelText="Due Date"
-                      pattern="d{1,2}/d{4}"
+                      pattern="\d{1,2}/\d{1,2}/\d{4}"
                       placeholder="mm/dd/yyyy"
                       type="text"
-                      value={dueDate}
-                      onChange={e => setDueDate(e.target.value)}
                     />
                   </DatePicker>
                 </div>

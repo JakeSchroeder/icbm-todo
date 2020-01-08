@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Checkbox,
   Button,
@@ -37,194 +37,140 @@ import "../styles/todos.scss";
 
 const batchActionClick = selectedRows => () => console.log("clicked");
 
-const insertInRandomPosition = (array, element) => {
-  const index = Math.floor(Math.random() * (array.length + 1));
-  return [...array.slice(0, index), element, ...array.slice(index)];
-};
+// const insertInRandomPosition = (array, element) => {
+//   const index = Math.floor(Math.random() * (array.length + 1));
+//   return [...array.slice(0, index), element, ...array.slice(index)];
+// };
 
-class TodoTable extends React.Component {
-  state = {
-    rows: this.props.rows,
-    headers: this.props.headers,
-    id: 0
-  };
+const TodoTable = ({ rows, headers, toggleAdding }) => {
+  return (
+    <div className="table--wrapper">
+      <DataTable
+        useZebraStyles={false}
+        isSortable={true}
+        rows={rows}
+        headers={headers}
+        // {...this.props}
+        render={({
+          rows,
+          headers,
+          getHeaderProps,
+          getSelectionProps,
+          getBatchActionProps,
+          getRowProps,
+          onInputChange,
+          selectedRows,
+          getTableProps,
+          getTableContainerProps
+        }) => (
+          <TableContainer
+            title="[User] Todos"
+            description={
+              "Below are a list of your Todos. You can sort, filter, check off and add new todo items."
+            }
+            {...getTableContainerProps()}
+          >
+            <TableToolbar>
+              <TableBatchActions {...getBatchActionProps()}>
+                <TableBatchAction
+                  renderIcon={Delete}
+                  iconDescription="Delete the selected rows"
+                  onClick={batchActionClick(selectedRows)}
+                >
+                  Delete
+                </TableBatchAction>
 
-  handleOnHeaderAdd = () => {
-    const length = this.state.headers.length;
-    const header = {
-      key: `header_${length}`,
-      header: `Header ${length}`
-    };
-
-    this.setState(state => {
-      const rows = state.rows.map(row => {
-        return {
-          ...row,
-          [header.key]: header.header
-        };
-      });
-      return {
-        rows,
-        headers: state.headers.concat(header)
-      };
-    });
-  };
-
-  handleOnRowAdd = () => {
-    this.setState(state => {
-      const { id: _id, rows } = state;
-      const id = _id + 1;
-      const row = {
-        id: "" + id,
-        name: `New Row ${id}`,
-        priority: "1",
-        dueDate: "1/1/2020",
-        completed: false
-      };
-
-      state.headers
-        .filter(header => row[header.key] === undefined)
-        .forEach(header => {
-          row[header.key] = header.header;
-        });
-
-      return {
-        id,
-        rows: insertInRandomPosition(rows, row)
-      };
-    });
-  };
-
-  render() {
-    return (
-      <div className="table--wrapper">
-        <DataTable
-          useZebraStyles={false}
-          isSortable={true}
-          rows={this.state.rows}
-          headers={this.state.headers}
-          {...this.props}
-          render={({
-            rows,
-            headers,
-            getHeaderProps,
-            getSelectionProps,
-            getBatchActionProps,
-            getRowProps,
-            onInputChange,
-            selectedRows,
-            getTableProps,
-            getTableContainerProps
-          }) => (
-            <TableContainer
-              title="[User] Todos"
-              description={
-                "Below are a list of your Todos. You can sort, filter, check off and add new one's."
-              }
-              {...getTableContainerProps()}
-            >
-              <TableToolbar>
-                <TableBatchActions {...getBatchActionProps()}>
-                  <TableBatchAction
-                    renderIcon={Delete}
-                    iconDescription="Delete the selected rows"
-                    onClick={batchActionClick(selectedRows)}
-                  >
-                    Delete
-                  </TableBatchAction>
-
-                  <TableBatchAction
-                    renderIcon={Download}
-                    iconDescription="Download the selected rows"
-                    onClick={batchActionClick(selectedRows)}
-                  >
-                    Download
-                  </TableBatchAction>
-                </TableBatchActions>
-                <TableToolbarContent>
-                  <TableToolbarSearch onChange={onInputChange} />
-                  <TableToolbarMenu>
+                <TableBatchAction
+                  renderIcon={Download}
+                  iconDescription="Download the selected rows"
+                  onClick={batchActionClick(selectedRows)}
+                >
+                  Download
+                </TableBatchAction>
+              </TableBatchActions>
+              <TableToolbarContent>
+                <TableToolbarSearch onChange={onInputChange} />
+                {/* <TableToolbarMenu>
                     <TableToolbarAction
                       primaryFocus
-                      onClick={this.handleOnRowAdd}
+                      onClick={() => console.log("Add Row")}
                     >
                       Add row
                     </TableToolbarAction>
-                    <TableToolbarAction onClick={this.handleOnHeaderAdd}>
+                    <TableToolbarAction onClick={) => console.log("Add Header")>
                       Add header
                     </TableToolbarAction>
-                  </TableToolbarMenu>
-                  <Button renderIcon={Add} onClick={this.props.toggleAdding}>
-                    Add Todo
-                  </Button>
-                </TableToolbarContent>
-              </TableToolbar>
-              <div className="table-wrapper">
-                <Table {...getTableProps()}>
-                  <TableHead>
-                    <TableRow>
-                      <TableExpandHeader />
-                      <TableSelectAll {...getSelectionProps()} />
-                      {headers.map(header => (
-                        <TableHeader
-                          {...getHeaderProps({ header, isSortable: true })}
-                        >
-                          {header.header}
-                        </TableHeader>
-                      ))}
-                      <TableHeader />
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {rows.map(row => (
-                      <React.Fragment key={row.id}>
-                        <TableExpandRow {...getRowProps({ row })}>
-                          <TableSelectRow {...getSelectionProps({ row })} />
-                          {row.cells.map(cell => {
-                            if (cell.info.header === "completed") {
-                              return (
-                                <TableCell key={cell.id}>
-                                  <Checkbox
-                                    id={"check-" + cell.id}
-                                    checked={cell.value}
-                                    labelText=""
-                                  />
-                                </TableCell>
-                              );
-                            } else {
-                              return (
-                                <TableCell key={cell.id}>
-                                  {cell.value}
-                                </TableCell>
-                              );
-                            }
-                          })}
-                          <TableCell>
-                            <OverflowMenu flipped>
-                              <OverflowMenuItem primaryFocus>
-                                Action 1
-                              </OverflowMenuItem>
-                              <OverflowMenuItem>Action 2</OverflowMenuItem>
-                              <OverflowMenuItem>Action 3</OverflowMenuItem>
-                            </OverflowMenu>
-                          </TableCell>
-                        </TableExpandRow>
-
-                        <TableExpandedRow colSpan={headers.length + 4}>
-                          <h1>{row.id}</h1>
-                          <p>Description here</p>
-                        </TableExpandedRow>
-                      </React.Fragment>
+                  </TableToolbarMenu> */}
+                <Button renderIcon={Add} onClick={toggleAdding}>
+                  Add Todo
+                </Button>
+              </TableToolbarContent>
+            </TableToolbar>
+            <div className="table-wrapper">
+              <Table {...getTableProps()}>
+                <TableHead>
+                  <TableRow>
+                    <TableExpandHeader />
+                    <TableSelectAll {...getSelectionProps()} />
+                    {headers.map(header => (
+                      <TableHeader
+                        {...getHeaderProps({ header, isSortable: true })}
+                      >
+                        {header.header}
+                      </TableHeader>
                     ))}
-                  </TableBody>
-                </Table>
-              </div>
-            </TableContainer>
-          )}
-        />
-      </div>
-    );
-  }
-}
+                    <TableHeader />
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.map(row => (
+                    <React.Fragment key={row.id}>
+                      <TableExpandRow {...getRowProps({ row })}>
+                        <TableSelectRow {...getSelectionProps({ row })} />
+                        {row.cells.map(cell => {
+                          if (cell.info.header === "completed") {
+                            return (
+                              <TableCell key={cell.id}>
+                                <Checkbox
+                                  id={"check-" + cell.id}
+                                  checked={cell.value}
+                                  hideLabel={true}
+                                  labelText="completed"
+                                />
+                              </TableCell>
+                            );
+                          } else {
+                            return (
+                              <TableCell key={cell.id}>{cell.value}</TableCell>
+                            );
+                          }
+                        })}
+                        <TableCell>
+                          <OverflowMenu flipped>
+                            <OverflowMenuItem itemText="Edit">
+                              Edit
+                            </OverflowMenuItem>
+                            <OverflowMenuItem itemText="Delete">
+                              Delete
+                            </OverflowMenuItem>
+                          </OverflowMenu>
+                        </TableCell>
+                      </TableExpandRow>
+
+                      <TableExpandedRow colSpan={headers.length + 4}>
+                        <h1>{row.id}</h1>
+                        <p>Description here</p>
+                      </TableExpandedRow>
+                    </React.Fragment>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </TableContainer>
+        )}
+      />
+    </div>
+  );
+};
 
 export default TodoTable;

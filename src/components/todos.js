@@ -5,6 +5,7 @@ import AddTodo from "./add.todo";
 import TodoTable from "./todo.table";
 
 const Todos = () => {
+
   const [todos, setTodos] = useState([]);
 
   let [isAdding, setIsAdding] = useState("hidden");
@@ -33,12 +34,12 @@ const Todos = () => {
   const addTodo = (newName, newPriority, newDueDate, newDescription) => {
     setTodos([
       {
-        id: Math.random() * 1000,
+        id: (Math.random() * 1000).toString(),
         name: newName,
         priority: newPriority,
         dueDate: newDueDate,
         desciption: newDescription,
-        completed: true
+        completed: false
       },
       ...todos
     ]);
