@@ -11,10 +11,10 @@ import { Link } from "react-router-dom";
 
 // import auth from "./auth";
 
-import "../styles/form.scss";
-import "../styles/login.scss";
+import "../../styles/form.scss";
+import "../../styles/login.scss";
 
-export default () => {
+const Login = () => {
   const [redirectToReferrer, setRedirect] = useState(false);
 
   return (
@@ -58,3 +58,5 @@ export default () => {
     </Form>
   );
 };
+
+export default Login;

@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import {
   Header,
   HeaderName,
@@ -17,7 +19,7 @@ import {
 
 import { Link } from "react-router-dom";
 
-import { auth } from "./auth";
+// import { auth } from "./auth";
 
 const LogIcon = ({ logType, iconType }) => {
   return (
@@ -27,7 +29,7 @@ const LogIcon = ({ logType, iconType }) => {
   );
 };
 
-const UIHeader = () => {
+const UIHeader = ({ auth }) => {
   const isLoggedIn = auth.isAuthenticated;
 
   let button;
@@ -67,4 +69,12 @@ const UIHeader = () => {
   );
 };
 
-export default UIHeader;
+UIHeader.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps)(UIHeader);

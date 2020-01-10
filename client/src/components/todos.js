@@ -5,7 +5,6 @@ import AddTodo from "./add.todo";
 import TodoTable from "./todo.table";
 
 const Todos = () => {
-
   const [todos, setTodos] = useState([]);
 
   let [isAdding, setIsAdding] = useState("hidden");
@@ -22,11 +21,6 @@ const Todos = () => {
     fetchData();
   }, []);
 
-  // const handleAddTodo = () => {
-  //   setIsAdding(true);
-  //   console.log("is adding? " + isAdding);
-  // };
-
   const toggleIsAdding = () => {
     setIsAdding(isAdding === "hidden" ? "isAdding" : "hidden");
   };
@@ -34,7 +28,7 @@ const Todos = () => {
   const addTodo = (newName, newPriority, newDueDate, newDescription) => {
     setTodos([
       {
-        id: (Math.random() * 1000).toString(),
+        id: (todos.length + 1).toString(),
         name: newName,
         priority: newPriority,
         dueDate: newDueDate,
@@ -42,7 +36,7 @@ const Todos = () => {
         completed: false
       },
       ...todos
-    ]);
+    ]); //function appears to be async which is annoying
   };
 
   return (

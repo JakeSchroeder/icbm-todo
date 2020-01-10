@@ -1,32 +1,32 @@
 export const initialRows = [
-  {
-    id: "a",
-    name: "Load Balancer 3",
-    priority: "1",
-    dueDate: "12/1/2020",
-    completed: false,
-  },
-  {
-    id: "b",
-    name: "Load Balancer 3",
-    priority: "1",
-    dueDate: "12/08/2020",
-    completed: false
-  },
-  {
-    id: "c",
-    name: "Load Balancer 10",
-    priority: "2",
-    dueDate: "12/08/2020",
-    completed: true
-  },
-  {
-    id: "d",
-    name: "Load Balancer 10",
-    priority: "5",
-    dueDate: "12/11/2020",
-    completed: false
-  }
+  // {
+  //   id: "a",
+  //   name: "Load Balancer 3",
+  //   priority: "1",
+  //   dueDate: "12/1/2020",
+  //   completed: false,
+  // },
+  // {
+  //   id: "b",
+  //   name: "Load Balancer 3",
+  //   priority: "1",
+  //   dueDate: "12/08/2020",
+  //   completed: false
+  // },
+  // {
+  //   id: "c",
+  //   name: "Load Balancer 10",
+  //   priority: "2",
+  //   dueDate: "12/08/2020",
+  //   completed: true
+  // },
+  // {
+  //   id: "d",
+  //   name: "Load Balancer 10",
+  //   priority: "5",
+  //   dueDate: "12/11/2020",
+  //   completed: false
+  // }
 ];
 
 export const headers = [
