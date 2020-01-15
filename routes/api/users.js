@@ -20,6 +20,8 @@ router.post("/register", (req, res) => {
 
   const { errors, isValid } = validateRegisterInput(req.body);
 
+  console.log(errors);
+
   // Check validation
   if (!isValid) {
     return res.status(400).json(errors);
