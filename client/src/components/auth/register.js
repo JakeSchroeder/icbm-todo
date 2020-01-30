@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {
   Button,
   Form,
@@ -18,6 +18,7 @@ import "../../styles/login.scss";
 class Register extends Component {
   constructor() {
     super();
+
     this.state = {
       name: "",
       email: "",
@@ -78,14 +79,17 @@ class Register extends Component {
           <div className="formGrouping">
             <div className="input-wrapper">
               <TextInput
-                autoComplete="username"
-                className="--username"
+                autoComplete="name"
+                className="--name"
                 type="text"
-                labelText="Username"
+                labelText="Name"
                 onChange={this.onChange}
                 value={this.state.name}
                 // invalidText={errors.name}
                 id="name"
+                name="name"
+                invalidText={errors.name}
+                invalid={!!errors.name}
               />
             </div>
             <div className="input-wrapper">
@@ -98,10 +102,12 @@ class Register extends Component {
                 value={this.state.email}
                 // invalidText={errors.email}
                 id="email"
+                invalidText={errors.email}
+                invalid={!!errors.email}
               />
             </div>
             <div className="input-wrapper">
-              <TextInput.PasswordInput
+              <TextInput
                 type="password"
                 autoComplete="new-password"
                 id="password"
@@ -109,6 +115,8 @@ class Register extends Component {
                 onChange={this.onChange}
                 value={this.state.password}
                 // invalidText={errors.password}
+                invalidText={errors.password}
+                invalid={!!errors.password}
               />
             </div>
           </div>
@@ -117,14 +125,7 @@ class Register extends Component {
             Already have an account?
           </Link>
 
-          <Button
-            type="submit"
-            onClick={() => {
-              console.log(errors);
-            }}
-          >
-            Register for Todo
-          </Button>
+          <Button type="submit">Register for Todo</Button>
         </Form>
       </>
     );
@@ -134,7 +135,7 @@ class Register extends Component {
 Register.propTypes = {
   registerUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.string.isRequired
+  errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({

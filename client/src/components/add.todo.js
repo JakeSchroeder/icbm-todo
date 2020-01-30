@@ -23,7 +23,7 @@ import {
 // import { Link } from "react-router-dom";
 
 const AddTodo = ({ addTodo, isAdding, toggleAdding }) => {
-  let [name, setName] = useState("");
+  let [title, setTitle] = useState("");
   let [priority, setPriority] = useState(1);
   let [dueDate, setDueDate] = useState("");
   let [description, setDescription] = useState("");
@@ -70,9 +70,9 @@ const AddTodo = ({ addTodo, isAdding, toggleAdding }) => {
                     invalidText="A todo name is required"
                     className="--todoName"
                     type="text"
-                    labelText="Name"
-                    value={name}
-                    onChange={e => setName(e.target.value)}
+                    labelText="Title"
+                    value={title}
+                    onChange={e => setTitle(e.target.value)}
                   />
                 </div>
                 <div className="input-wrapper">
@@ -135,8 +135,8 @@ const AddTodo = ({ addTodo, isAdding, toggleAdding }) => {
           </Button>
           <Button
             onClick={() => {
-              addTodo(name, priority, dueDate, description);
-              setName("");
+              addTodo(title, priority, dueDate, description);
+              setTitle("");
               setPriority(1);
               setDueDate("");
               setDescription("");

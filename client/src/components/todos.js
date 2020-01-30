@@ -25,11 +25,11 @@ const Todos = () => {
     setIsAdding(isAdding === "hidden" ? "isAdding" : "hidden");
   };
 
-  const addTodo = (newName, newPriority, newDueDate, newDescription) => {
+  const addTodo = (newTitle, newPriority, newDueDate, newDescription) => {
     setTodos([
       {
         id: (todos.length + 1).toString(),
-        name: newName,
+        title: newTitle,
         priority: newPriority,
         dueDate: newDueDate,
         desciption: newDescription,

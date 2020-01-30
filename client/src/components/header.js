@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
@@ -17,39 +17,20 @@ import {
   Login20
 } from "@carbon/icons-react";
 
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+
+import { logoutUser } from "../actions/authActions";
 
 // import { auth } from "./auth";
 
-const LogIcon = ({ logType, iconType }) => {
-  return (
-    <HeaderGlobalAction aria-label={logType} onClick={null}>
-      {iconType}
-    </HeaderGlobalAction>
-  );
-};
+class UIHeader extends Component {
+  onLogoutClick = e => {
+    this.props.logoutUser(this.props.history);
+    window.location.href = "/";
+  };
 
-const UIHeader = ({ auth }) => {
-  const isLoggedIn = auth.isAuthenticated;
-
-  let button;
-
-  if (!isLoggedIn) {
-    button = (
-      <Link to="/login">
-        <LogIcon logType="Log in" iconType={<Login20 />} />
-      </Link>
-    );
-  } else {
-    button = (
-      <Link to="/login">
-        <LogIcon logType="Log out" iconType={<Logout20 />} />
-      </Link>
-    );
-  }
-
-  return (
-    <>
+  render() {
+    return (
       <Header aria-label="ICBM Platform Name">
         <HeaderName href="/" prefix="ICBM">
           Todo
@@ -62,19 +43,19 @@ const UIHeader = ({ auth }) => {
       <HeaderGlobalAction aria-label="Notifications" onClick={null}>
         <Notification20 />
       </HeaderGlobalAction> */}
-          {button}
+          <HeaderGlobalAction aria-label="Log out" onClick={this.onLogoutClick}>
+            <Logout20 />
+          </HeaderGlobalAction>
         </HeaderGlobalBar>
       </Header>
-    </>
-  );
-};
-
-UIHeader.propTypes = {
-  auth: PropTypes.object.isRequired
-};
+    );
+  }
+}
 
 const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps)(UIHeader);
+export default withRouter(
+  connect(mapStateToProps, { logoutUser })(withRouter(UIHeader))
+);

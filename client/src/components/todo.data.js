@@ -31,8 +31,8 @@ export const initialRows = [
 
 export const headers = [
   {
-    key: "name",
-    header: "Name"
+    key: "title",
+    header: "Title"
   },
   {
     key: "priority",
