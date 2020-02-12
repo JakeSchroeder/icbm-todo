@@ -31,9 +31,9 @@ class UIHeader extends Component {
 
   render() {
     return (
-      <Header aria-label="ICBM Platform Name">
-        <HeaderName href="/" prefix="ICBM">
-          Todo
+      <Header aria-label="Isophex Platform Name">
+        <HeaderName href="/" prefix="Isophex">
+          Todos
         </HeaderName>
         {/* <SkipToContent/> */}
         <HeaderGlobalBar>

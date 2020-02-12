@@ -95,8 +95,12 @@ class Login extends Component {
               value={this.state.email}
               // invalidText={errors.email}
               id="email"
-              invalidText={errors.email}
-              invalid={!!errors.email}
+              invalidText={
+                errors.emailnotfound ? errors.emailnotfound : errors.email
+              }
+              invalid={
+                !!errors.emailnotfound ? !!errors.emailnotfound : !!errors.email
+              }
             />
           </div>
           <div className="input-wrapper">
@@ -108,8 +112,16 @@ class Login extends Component {
               onChange={this.onChange}
               value={this.state.password}
               // invalidText={errors.password}
-              invalidText={errors.password}
-              invalid={!!errors.password}
+              invalidText={
+                errors.passwordincorrect
+                  ? errors.passwordincorrect
+                  : errors.password
+              }
+              invalid={
+                !!errors.passwordincorrect
+                  ? !!errors.passwordincorrect
+                  : !!errors.password
+              }
             />
           </div>
         </div>
